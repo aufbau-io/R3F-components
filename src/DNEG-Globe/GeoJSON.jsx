@@ -14,21 +14,9 @@ void main() {
 }
 `;
 
-const lineVertexShader = `
-    void main() {
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-    }
-`;
-
 const lineFragmentShader = `
     void main() {
       gl_FragColor = vec4(251.0/255.0, 251.0/255.0, 240.0/255.0, 1.0);
-    }
-`;
-
-const lineFragmentShaderDark = `
-    void main() {
-        gl_FragColor = vec4(35.0/255.0, 35.0/255.0, 35.0/255.0, 1.0); // color: #232323
     }
 `;
 
@@ -67,7 +55,7 @@ function projectVertexToSphere(x, y) {
   return projected;
 }
 
-function createBorderLines(coords, offset, lineShader, thickness) {
+function createBorderLines(coords, offset, lineShader) {
   const vertices = [];
 
   for (let i = 0; i < coords[0].length; i++) {
@@ -80,7 +68,7 @@ function createBorderLines(coords, offset, lineShader, thickness) {
   geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 
   return <line geometry={geometry} key={`border-${Math.random()}`}>
-      <shaderMaterial vertexShader={lineVertexShader} fragmentShader={lineShader} />
+      <shaderMaterial vertexShader={vertexShader} fragmentShader={lineShader} />
   </line>;
 }
 
