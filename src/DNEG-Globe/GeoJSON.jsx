@@ -2,6 +2,7 @@ import React from 'react';
 import * as THREE from 'three';
 import geoJson from './ne_110m_admin_0_countries.json';
 
+
 const vertexShader = `
 void main() {
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
@@ -120,7 +121,6 @@ function processPolygon(coords, index, idx) {
 }
 
 
-
 function convertGeoJsonToMeshes(feature, index) {
   const { geometry: featureGeometry } = feature;
 
@@ -136,10 +136,11 @@ function convertGeoJsonToMeshes(feature, index) {
 }
 
 
-export default function GeoJSON() {
+export default function GeoJSON({ rotateToLocation }) {
+
   return (
     <group>
-      {geoJson.features.map((feature, index) => convertGeoJsonToMeshes(feature, index))}
+        {geoJson.features.map((feature, index) => convertGeoJsonToMeshes(feature, index))}
     </group>
   );
 }
