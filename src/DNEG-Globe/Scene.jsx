@@ -5,7 +5,7 @@ import Globe from './Globe.jsx'
 export default function Scene()
 {
 
-  {/*SHADERS HAVE BEEN USED A BUNCH IN THE SCENE TO ENFORCE STRICT BRAND COLORS*/}
+  {/*SHADERS HAVE BEEN USED A BUNCH TO ENFORCE STRICT BRAND COLORS*/}
   return <Canvas 
       gl={{ antialias: false, alpha: true }}
       orthographic

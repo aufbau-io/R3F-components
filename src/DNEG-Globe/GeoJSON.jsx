@@ -38,23 +38,25 @@ function geoJsonToShape(geoJsonPolygon) {
     return shape;
 }
 
-function projectVertexToSphere(x, y) {
-  const long = x * (Math.PI / 180);
-  const lat = y * (Math.PI / 180);
+function projectVertexToSphere(longitude, latitude) {
+  const longRad = longitude * (Math.PI / 180);
+  const latRad = latitude * (Math.PI / 180);
   const radius = 1;
 
   const projected = {
-      x: radius * Math.cos(lat) * Math.sin(long),
-      y: radius * Math.sin(lat),
-      z: radius * Math.cos(lat) * Math.cos(long)
+      x: radius * Math.cos(latRad) * Math.cos(longRad),
+      y: radius * Math.cos(latRad) * Math.sin(longRad),
+      z: radius * Math.sin(latRad)
   };
 
   if (isNaN(projected.x) || isNaN(projected.y) || isNaN(projected.z)) {
-      console.error(`Invalid projection for x=${x}, y=${y}. Result:`, projected);
+      console.error(`Invalid projection for longitude=${longitude}, latitude=${latitude}. Result:`, projected);
   }
 
   return projected;
 }
+
+
 
 function createBorderLines(coords, offset, lineShader) {
   const vertices = [];
@@ -73,52 +75,83 @@ function createBorderLines(coords, offset, lineShader) {
   </line>;
 }
 
+function calculateCentroid(points) {
+  let centroid = { x: 0, y: 0, z: 0 };
+  points.forEach(point => {
+      centroid.x += point.x;
+      centroid.y += point.y;
+      centroid.z += point.z;
+  });
+  centroid.x /= points.length;
+  centroid.y /= points.length;
+  centroid.z /= points.length;
+  return centroid;
+}
+
+
 
 function processPolygon(coords, index, idx) {
   const shape = geoJsonToShape(coords[0]);
 
   const extrudeSettings = {
-    depth: 0.055,
+    depth: 0.03,
     bevelEnabled: false,
   };
   const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
 
   const positionAttribute = geometry.attributes.position;
-
   const vertex = new THREE.Vector3();
+
+  let topVertices = [];
+  let maxZ = Number.NEGATIVE_INFINITY;
+  
   for (let i = 0; i < positionAttribute.count; i++) {
-    vertex.fromBufferAttribute(positionAttribute, i);
-    
-    const projectedVertex = projectVertexToSphere(vertex.x, vertex.y);
-    const scale = 1 + vertex.z;  // Adjust based on extrusion depth
-
-    vertex.x = projectedVertex.x * scale;
-    vertex.y = projectedVertex.y * scale;
-    vertex.z = projectedVertex.z * scale;
-
-    positionAttribute.setXYZ(i, vertex.x, vertex.y, vertex.z);
+      vertex.fromBufferAttribute(positionAttribute, i);
+      
+      const projectedVertex = projectVertexToSphere(vertex.x, vertex.y);
+      const scale = 1 + vertex.z;  // Adjust based on extrusion depth
+  
+      vertex.x = projectedVertex.x * scale;
+      vertex.y = projectedVertex.y * scale;
+      vertex.z = projectedVertex.z * scale;
+  
+      positionAttribute.setXYZ(i, vertex.x, vertex.y, vertex.z);
+      
+      if (vertex.z > maxZ) {
+          maxZ = vertex.z;
+      }
   }
+  
+  // Adjust top vertices to be convex
+  for (let i = 0; i < positionAttribute.count; i++) {
+      vertex.fromBufferAttribute(positionAttribute, i);
+      if (vertex.z >= maxZ) {
+          const direction = vertex.clone().normalize();
+          vertex.add(direction.multiplyScalar(0.01)); // Adjust scalar value for desired convexity
+          positionAttribute.setXYZ(i, vertex.x, vertex.y, vertex.z);
+      }
+  }
+
+  
 
   geometry.computeVertexNormals();  // Important for lighting
 
   const key = idx !== undefined ? `${index}-${idx}` : index;
-  // const borderLines = createBorderLines(coords, 1, lineFragmentShader);
-  const borderLinesRaised = createBorderLines(coords, 1.055, lineFragmentShader);
-
+  const borderLinesRaised = createBorderLines(coords, 1.03, lineFragmentShader);
 
   return (
     <group key={key}>
       <mesh geometry={geometry}>
-      <shaderMaterial 
+        <shaderMaterial 
             vertexShader={vertexShader} 
             fragmentShader={fragmentShader}
         />
       </mesh>
-      {/* {borderLines} */}
       {borderLinesRaised}
     </group>
   );
 }
+
 
 
 function convertGeoJsonToMeshes(feature, index) {

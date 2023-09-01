@@ -1,7 +1,7 @@
 import React from 'react';
 import GeoJSON from './GeoJSON'
 import * as THREE from 'three';
-import { useFrame  } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei'
 
 const vertexShader = `
@@ -17,31 +17,36 @@ void main() {
 `;
 
 export default function Globe() {
-  const [targetRotation, setTargetRotation] = React.useState(new THREE.Euler());
+  const globeRef = React.useRef();
+  const [targetQuaternion, setTargetQuaternion] = React.useState(new THREE.Quaternion());
 
-  useFrame(({ scene }) => {
-    if (scene.rotation.equals(targetRotation)) return;
-
-    scene.rotation.x += (targetRotation.x - scene.rotation.x) * 0.1;
-    scene.rotation.y += (targetRotation.y - scene.rotation.y) * 0.1;
-    scene.rotation.z += (targetRotation.z - scene.rotation.z) * 0.1;
+  useFrame(() => {
+    const globe = globeRef.current;
+    if (globe) {
+      globe.quaternion.slerp(targetQuaternion, 0.1);
+    }
   });
+
   function rotateToLocation([lat, long]) {
-    const phi = THREE.MathUtils.degToRad(90 - lat);
+    const phi = THREE.MathUtils.degToRad(90 + lat);
     const theta = THREE.MathUtils.degToRad(long + 180);
-    setTargetRotation(new THREE.Euler(-phi, theta, 0, 'YXZ'));
+
+    const euler = new THREE.Euler(-phi, theta, 0, 'YXZ');
+    const target = new THREE.Quaternion().setFromEuler(euler);
+
+    setTargetQuaternion(target);
   }
 
   return (
-    <group position={[0, 0, 0]}>
+    <group ref={globeRef} position={[0, 0, 0]}>
       <mesh>
-        <sphereGeometry args={[1, 256]} />
+        <sphereGeometry args={[1, 32]} />
         <shaderMaterial 
           vertexShader={vertexShader} 
           fragmentShader={fragmentShader}
         />
       </mesh>
-      <GeoJSON setTargetRotation={setTargetRotation} rotateToLocation={rotateToLocation} />
+      <GeoJSON setTargetRotation={setTargetQuaternion} rotateToLocation={rotateToLocation} />
       <Html wrapperClass="label">
         <div>
           <button onClick={() => rotateToLocation([52.5200, 13.4050])}>Go to Berlin</button>
