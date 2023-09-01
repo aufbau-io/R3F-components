@@ -75,21 +75,6 @@ function createBorderLines(coords, offset, lineShader) {
   </line>;
 }
 
-function calculateCentroid(points) {
-  let centroid = { x: 0, y: 0, z: 0 };
-  points.forEach(point => {
-      centroid.x += point.x;
-      centroid.y += point.y;
-      centroid.z += point.z;
-  });
-  centroid.x /= points.length;
-  centroid.y /= points.length;
-  centroid.z /= points.length;
-  return centroid;
-}
-
-
-
 function processPolygon(coords, index, idx) {
   const shape = geoJsonToShape(coords[0]);
 
@@ -132,10 +117,6 @@ function processPolygon(coords, index, idx) {
       }
   }
 
-  
-
-  geometry.computeVertexNormals();  // Important for lighting
-
   const key = idx !== undefined ? `${index}-${idx}` : index;
   const borderLinesRaised = createBorderLines(coords, 1.03, lineFragmentShader);
 
@@ -152,8 +133,6 @@ function processPolygon(coords, index, idx) {
   );
 }
 
-
-
 function convertGeoJsonToMeshes(feature, index) {
   const { geometry: featureGeometry } = feature;
 
@@ -169,7 +148,7 @@ function convertGeoJsonToMeshes(feature, index) {
 }
 
 
-export default function GeoJSON({ rotateToLocation }) {
+export default function GeoJSON() {
 
   return (
     <group>

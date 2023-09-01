@@ -1,8 +1,8 @@
 import React from 'react';
-import GeoJSON from './GeoJSON'
+import GeoJSON from './GeoJSON';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
-import { Html } from '@react-three/drei'
+import { Html } from '@react-three/drei';
 
 const vertexShader = `
 void main() {
@@ -18,27 +18,43 @@ void main() {
 
 export default function Globe() {
   const globeRef = React.useRef();
-  const [targetQuaternion, setTargetQuaternion] = React.useState(new THREE.Quaternion());
+  const [targetRotation, setTargetRotation] = React.useState([0, 0, 0]);
+
+  const [targetLocation, setTargetLocation] = React.useState(null);
 
   useFrame(() => {
     const globe = globeRef.current;
     if (globe) {
-      globe.quaternion.slerp(targetQuaternion, 0.1);
+      globe.rotation.y = THREE.MathUtils.lerp(globe.rotation.y, targetRotation[1], 0.1);
+      globe.rotation.x = THREE.MathUtils.lerp(globe.rotation.x, targetRotation[2], 0.1);
     }
-  });
-
+});
   function rotateToLocation([lat, long]) {
-    const phi = THREE.MathUtils.degToRad(90 + lat);
-    const theta = THREE.MathUtils.degToRad(long + 180);
+    const radius = 1.02; 
+    const phi = THREE.MathUtils.degToRad(90 - lat);
+    const theta = THREE.MathUtils.degToRad(long);
 
-    const euler = new THREE.Euler(-phi, theta, 0, 'YXZ');
-    const target = new THREE.Quaternion().setFromEuler(euler);
+    const x = radius * Math.sin(phi) * Math.cos(theta);
+    const y = radius * Math.cos(phi);
+    const z = radius * Math.sin(phi) * Math.sin(theta);
 
-    setTargetQuaternion(target);
-  }
+    // Position the torus
+    setTargetLocation([x, z, y]);
+
+    // Set target rotation for non-standard orientation
+    setTargetRotation([0, -phi, theta]);
+}
+
+
 
   return (
-    <group ref={globeRef} position={[0, 0, 0]}>
+    <group ref={globeRef} >
+      {targetLocation && 
+      <mesh position={targetLocation}>
+        <torusGeometry args={[0.02, 0.005, 8, 32]} />
+        <meshBasicMaterial color="red" />
+      </mesh>}
+      
       <mesh>
         <sphereGeometry args={[1, 32]} />
         <shaderMaterial 
@@ -46,9 +62,13 @@ export default function Globe() {
           fragmentShader={fragmentShader}
         />
       </mesh>
-      <GeoJSON setTargetRotation={setTargetQuaternion} rotateToLocation={rotateToLocation} />
+
+      <GeoJSON />
+      
       <Html wrapperClass="label">
         <div>
+        <button onClick={() => rotateToLocation([90, 0])}>Go to North Pole</button>
+        <button onClick={() => rotateToLocation([0, 13.4050])}>Go to Test</button>
           <button onClick={() => rotateToLocation([52.5200, 13.4050])}>Go to Berlin</button>
           <button onClick={() => rotateToLocation([34.0522, -118.2437])}>Go to Los Angeles</button>
           <button onClick={() => rotateToLocation([-23.5505, -46.6333])}>Go to São Paulo</button>

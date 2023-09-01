@@ -6,14 +6,14 @@ export default function Scene()
 {
 
   {/*SHADERS HAVE BEEN USED A BUNCH TO ENFORCE STRICT BRAND COLORS*/}
-  return <Canvas 
+  return <Canvas
       gl={{ antialias: false, alpha: true }}
       orthographic
       camera={{ near: 0.1, far: 10000, position: [0, 0, 2], zoom: 400 }}
     >
 
     <color attach="background" args={["#F1F1E6"]} />
-    <OrbitControls enableRotate={true} enableZoom={true} enablePan={false} />
+    {/* <OrbitControls enableRotate={true} enableZoom={true} enablePan={false} /> */}
 
     <Globe />
 
