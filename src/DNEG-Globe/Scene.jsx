@@ -15,7 +15,9 @@ export default function Scene()
     <color attach="background" args={["#F1F1E6"]} />
     {/* <OrbitControls enableRotate={true} enableZoom={true} enablePan={false} /> */}
 
-    <Globe />
+    <group rotation={[0, 0, -Math.PI/2]}>
+      <Globe />
+    </group>
 
     </Canvas>
 }
