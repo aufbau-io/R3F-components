@@ -1,6 +1,6 @@
 import React from 'react';
 import * as THREE from 'three';
-import geoJson from './ne_110m_admin_0_countries.json';
+import geoJson from '../data/ne_110m_admin_0_countries.json';
 
 
 const vertexShader = `
