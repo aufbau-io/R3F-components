@@ -87,7 +87,6 @@ function processPolygon(coords, index, idx) {
   const positionAttribute = geometry.attributes.position;
   const vertex = new THREE.Vector3();
 
-  let topVertices = [];
   let maxZ = Number.NEGATIVE_INFINITY;
   
   for (let i = 0; i < positionAttribute.count; i++) {
