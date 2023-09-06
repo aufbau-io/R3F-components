@@ -9,12 +9,8 @@ This module provides a 3D globe visualization with selectable country points and
 |── index.jsx: App entry point.
 |
 |── components/
-|   |── Scene.jsx: Main globe container.
-|   |── Globe.jsx: Globe render & interactions.
-|   |── GeoJSON.jsx: Renders country data.
-|
-|── data/
-    |── ne_110m_admin_0_countries.json: Country outlines.
+|   |── Scene.jsx: Main vfx-breakdown container.
+|   |── VFXBreakdown.jsx: VFXBreakdown render & interactions.
 ```
 
 ## Integration Steps
