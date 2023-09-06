@@ -2,24 +2,21 @@
 
 This module provides a 3D globe visualization with selectable country points and a toggle-able torus marker.
 
-// ## Directory Structure
+## Directory Structure
 
 ```
-// |── index.jsx: Entry point for the React application.
+// |── index.jsx: App entry point.
 // |
-// |── Globe/: Contains all the relevant files and sub-components for the globe visualization.
+// |── Globe/
+// |   |── Scene.jsx: Main globe container.
 // |   |
-// |   |── Scene.jsx: Acts as the main container for the Globe visualization, and houses the primary logic for rendering.
+// |   |── components/
+// |   |   |── Globe.jsx: Globe render & interactions.
+// |   |   |── GeoJSON.jsx: Renders country data.
 // |   |
-// |   |── components/: Contains the individual React components that make up the globe visualization.
-// |   |   |
-// |   |   |── Globe.jsx: Renders the globe and handles its interactions.
-// |   |   |
-// |   |   |── GeoJSON.jsx: Processes and renders country outlines and details on the globe using the provided GeoJSON data.
-// |   |
-// |   |── data/: Contains the necessary data files for the globe.
-// |       |
-// |       |── ne_110m_admin_0_countries.json: GeoJSON data for country outlines and details.
+// |   |── data/
+// |       |── ne_110m_admin_0_countries.json: Country outlines.
+
 
 ```
 
