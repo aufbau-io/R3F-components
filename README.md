@@ -5,14 +5,22 @@ This module provides a 3D globe visualization with selectable country points and
 // ## Directory Structure
 
 ```
-- index.jsx: Entry point for the React application.
-- Globe/: Contains all the relevant files and sub-components for the globe visualization.
-  - Scene.jsx: Acts as the main container for the Globe visualization, and houses the primary logic for rendering.
-  - components/: Contains the individual React components that make up the globe visualization.
-    - Globe.jsx: Renders the globe and handles its interactions.
-    - GeoJSON.jsx: Processes and renders country outlines and details on the globe using the provided GeoJSON data.
-  - data/: Contains the necessary data files for the globe.
-    - ne_110m_admin_0_countries.json: GeoJSON data for country outlines and details.
+// |── index.jsx: Entry point for the React application.
+// |
+// |── Globe/: Contains all the relevant files and sub-components for the globe visualization.
+// |   |
+// |   |── Scene.jsx: Acts as the main container for the Globe visualization, and houses the primary logic for rendering.
+// |   |
+// |   |── components/: Contains the individual React components that make up the globe visualization.
+// |   |   |
+// |   |   |── Globe.jsx: Renders the globe and handles its interactions.
+// |   |   |
+// |   |   |── GeoJSON.jsx: Processes and renders country outlines and details on the globe using the provided GeoJSON data.
+// |   |
+// |   |── data/: Contains the necessary data files for the globe.
+// |       |
+// |       |── ne_110m_admin_0_countries.json: GeoJSON data for country outlines and details.
+
 ```
 
 ## Integration Steps
@@ -25,7 +33,7 @@ This module provides a 3D globe visualization with selectable country points and
 3. Use the component in your render method:
 
    ```jsx
-   <Scene />
+   <Scene country={country} showTorus={showTorus} />
    ```
 
 4. If you'd like to customize or use specific props, refer to the prop types and default values inside each component file.
@@ -38,6 +46,4 @@ This module provides a 3D globe visualization with selectable country points and
 
 ## Notes for Development
 
-- If you wish to add more country points or adjust existing ones, modify the `COUNTRIES` enum in `index.jsx`.
-- Styles related to the globe should be placed within the `Globe` directory to maintain modularity.
-- When adding new components or data files, ensure they are appropriately imported and exported for ease of use in other parts of the application.
+- If you wish to add more country points or adjust existing ones, modify the `COUNTRIES` enum in `index.jsx`. The long/lat for each country could also be stored in the main app logic.
