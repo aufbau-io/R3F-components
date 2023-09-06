@@ -5,17 +5,16 @@ This module provides a 3D globe visualization with selectable country points and
 ## Directory Structure
 
 ```
+/src
 |── index.jsx: App entry point.
 |
-|── Globe/
+|── components/
 |   |── Scene.jsx: Main globe container.
-|   |
-|   |── components/
-|   |   |── Globe.jsx: Globe render & interactions.
-|   |   |── GeoJSON.jsx: Renders country data.
-|   |
-|   |── data/
-|       |── ne_110m_admin_0_countries.json: Country outlines.
+|   |── Globe.jsx: Globe render & interactions.
+|   |── GeoJSON.jsx: Renders country data.
+|
+|── data/
+    |── ne_110m_admin_0_countries.json: Country outlines.
 ```
 
 ## Integration Steps
