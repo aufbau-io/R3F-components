@@ -23,12 +23,12 @@ This module provides a 3D globe visualization with selectable country points and
 1. Ensure that the necessary packages are installed. Check `package.json` for the required dependencies.
 2. Import the main `Scene` component where you'd like to display the globe in your main application:
    ```jsx
-   import Scene from "./Globe/Scene.jsx";
+   import Globe from "./Globe/Scene.jsx";
    ```
 3. Use the component in your render method:
 
    ```jsx
-   <Scene country={country} showTorus={showTorus} />
+   <Globe country={country} showTorus={showTorus} />
    ```
 
 ## Notes for Development
