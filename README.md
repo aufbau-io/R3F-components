@@ -1,6 +1,6 @@
 # Globe Visualization Module
 
-This module provides a 3D globe visualization with selectable country points and a toggle-able torus marker.
+This module provides a 3D globe visualization with selectable country points and an optional torus marker.
 
 ## Directory Structure
 
