@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './style.css';
 import ReactDOM from 'react-dom/client';
-import Globe from './Globe/Scene.jsx';
+import Globe from './components/Scene.jsx';
 
 export const COUNTRIES = {
   NORTH_POLE: [90, 0],

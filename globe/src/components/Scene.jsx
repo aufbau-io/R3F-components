@@ -1,7 +1,7 @@
 import React from 'react';
 import { Canvas } from '@react-three/fiber'
 // import { OrbitControls } from '@react-three/drei';
-import Globe from './components/Globe';
+import Globe from './Globe';
 
 export default function Scene({ country, showTorus }) {
 

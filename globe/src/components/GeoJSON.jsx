@@ -2,7 +2,6 @@ import React from 'react';
 import * as THREE from 'three';
 import geoJson from '../data/ne_110m_admin_0_countries.json';
 
-
 const vertexShader = `
 void main() {
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);

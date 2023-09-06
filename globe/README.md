@@ -7,15 +7,13 @@ This module provides a 3D globe visualization with selectable country points and
 ```
 |── index.jsx: App entry point.
 |
-|── Globe/
+|── components/
 |   |── Scene.jsx: Main globe container.
-|   |
-|   |── components/
-|   |   |── Globe.jsx: Globe render & interactions.
-|   |   |── GeoJSON.jsx: Renders country data.
-|   |
-|   |── data/
-|       |── ne_110m_admin_0_countries.json: Country outlines.
+|   |── Globe.jsx: Globe render & interactions.
+|   |── GeoJSON.jsx: Renders country data.
+|
+|── data/
+    |── ne_110m_admin_0_countries.json: Country outlines.
 ```
 
 ## Integration Steps
@@ -23,7 +21,7 @@ This module provides a 3D globe visualization with selectable country points and
 1. Ensure that the necessary packages are installed. Check `package.json` for the required dependencies.
 2. Import the main `Scene` component where you'd like to display the globe in your main application:
    ```jsx
-   import Globe from "./Globe/Scene.jsx";
+   import Globe from "./Scene.jsx";
    ```
 3. Use the component in your render method:
 
