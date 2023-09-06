@@ -2,18 +2,20 @@ Globe Visualization Module
 This module provides a 3D globe visualization with selectable country points and a toggle-able torus marker.
 
 Directory Structure
-index.jsx: Entry point for the React application.
-Globe/: Contains all the relevant files and sub-components for the globe visualization.
-Scene.jsx: Acts as the main container for the Globe visualization, and houses the primary logic for rendering.
-components/: Contains the individual React components that make up the globe visualization.
-Globe.jsx: Renders the globe and handles its interactions.
-GeoJSON.jsx: Processes and renders country outlines and details on the globe using the provided GeoJSON data.
-data/: Contains the necessary data files for the globe.
-ne_110m_admin_0_countries.json: GeoJSON data for country outlines and details.
-Integration Steps
-Ensure that the necessary packages are installed. Check package.json for the required dependencies.
+markdown
+Copy code
 
-Import the main Scene component where you'd like to display the globe in your main application.
+- index.jsx: Entry point for the React application.
+- Globe/: Contains all the relevant files and sub-components for the globe visualization.
+  - Scene.jsx: Acts as the main container for the Globe visualization, and houses the primary logic for rendering.
+  - components/: Contains the individual React components that make up the globe visualization.
+    - Globe.jsx: Renders the globe and handles its interactions.
+    - GeoJSON.jsx: Processes and renders country outlines and details on the globe using the provided GeoJSON data.
+  - data/: Contains the necessary data files for the globe. - ne_110m_admin_0_countries.json: GeoJSON data for country outlines and details.
+    Integration Steps
+    Ensure that the necessary packages are installed. Check package.json for the required dependencies.
+
+Import the main Scene component where you'd like to display the globe in your main application:
 
 jsx
 Copy code
@@ -34,4 +36,3 @@ Notes for Development
 If you wish to add more country points or adjust existing ones, modify the COUNTRIES enum in index.jsx.
 Styles related to the globe should be placed within the Globe directory to maintain modularity.
 When adding new components or data files, ensure they are appropriately imported and exported for ease of use in other parts of the application.
-Feel free to modify or expand upon this README as per the project's requirements. Remember, a README's primary goal is clarity, so any developer, whether they're familiar with the project or not, should be able to understand and integrate the module with ease.
