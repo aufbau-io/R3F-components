@@ -5,6 +5,7 @@ This module provides a 3D globe visualization with selectable country points and
 ## Directory Structure
 
 ```
+/src
 |── index.jsx: App entry point.
 |
 |── components/
