@@ -20,18 +20,17 @@ void main() {
 }
 `;
 
-export default function Plane() {
+export default function Plane({ location = [0, 0, 0] }) {
 
   return (
-    <group>
+    <group position={location}>
       <mesh>
-        <planeBufferGeometry args={[1, 1]} />
+        <planeBufferGeometry args={[2, 1]} />
         <shaderMaterial
           vertexShader={vertexShader}
           fragmentShader={fragmentShaderRed}
           transparent
           side={THREE.DoubleSide}
-
         /> 
       </mesh>
     </group>
