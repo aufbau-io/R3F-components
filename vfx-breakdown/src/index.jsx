@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './style.css';
 import ReactDOM from 'react-dom/client';
-import VFXBreakdown from './VFXBreakdown/Scene.jsx';
+import VFXBreakdown from './components/Scene.jsx';
 
 function App() {
   return (

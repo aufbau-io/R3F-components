@@ -1,9 +1,9 @@
 import React from 'react';
 import { Canvas } from '@react-three/fiber'
-// import { OrbitControls } from '@react-three/drei';
-import Globe from './components/Globe';
+import { OrbitControls } from '@react-three/drei';
+import Plane from './Plane';
 
-export default function Scene({ country, showTorus }) {
+export default function Scene() {
 
   return (
     <Canvas
@@ -13,9 +13,10 @@ export default function Scene({ country, showTorus }) {
     >
 
       <color attach="background" args={["#F1F1E6"]} />
-      <group rotation={[0, 0, -Math.PI / 2]}>
-        <Globe country={country} showTorus={showTorus} />
+      <group>
+        <Plane />
       </group>
+      <OrbitControls/>
 
     </Canvas>
   );

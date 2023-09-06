@@ -8,24 +8,3 @@ body,
   height: 100%;
   background: ivory;
 }
-
-.label div {
-  position: absolute;
-  top: -22.5vh;
-  left: 0;
-  width: 100vw;
-  justify-content: center;
-  transform: translate(-50%, 0);
-  display: flex;
-  flex-flow: row wrap;
-}
-
-.controls {
-  position: absolute;
-  top: 1rem;
-  left: 0;
-  width: 100vw;
-  justify-content: center;
-  display: flex;
-  flex-flow: row wrap;
-}
