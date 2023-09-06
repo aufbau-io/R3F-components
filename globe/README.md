@@ -1,6 +1,6 @@
 # Globe Visualization Module
 
-This module provides a 3D globe visualization with selectable country points and an optional torus marker.
+This module provides a VFX Breakdown component with a split-apart functionality on scroll
 
 ## Directory Structure
 
