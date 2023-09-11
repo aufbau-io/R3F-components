@@ -28,4 +28,4 @@ This module provides a VFX Breakdown component with a split-apart functionality 
 
 ## Notes for Development
 
-- Images will scale down to fit a 2:1 aspect ratio for the plane geometries, while mainatining their original aspect ratios. For best results use images with a 2:1 aspect ratio or manually adjust.
+- Images will scale down to fit a 2:1 aspect ratio for the plane geometries while mainatining their original aspect ratios. For best results use images with a 2:1 aspect ratio or manually adjust.
