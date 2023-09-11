@@ -3,6 +3,8 @@ import './style.css';
 import ReactDOM from 'react-dom/client';
 import Globe from './components/Scene.jsx';
 
+const BORDER_LINE_WIDTH = 1.5
+
 export const COUNTRIES = {
   NORTH_POLE: [90, 0],
   SOUTH_POLE: [-90, 0],
@@ -19,12 +21,12 @@ export const COUNTRIES = {
 };
 
 function App() {
-  const [country, setCountry] = useState(COUNTRIES.NORTH_POLE); // initial country
+  const [country, setCountry] = useState(COUNTRIES.LONDON); // initial country
   const [showTorus, setShowTorus] = useState(true); // showing the torus initially
 
   return (
     <>
-      <Globe country={country} showTorus={showTorus} />
+      <Globe country={country} showTorus={showTorus} borderLineWidth={BORDER_LINE_WIDTH} />
       {/* CONTROLS ONLY NEEDED FOR DEMO, CAN EXPOSE <GLOBE/> ONLY */}
       <div className="controls">
         {

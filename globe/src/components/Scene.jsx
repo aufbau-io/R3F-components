@@ -3,7 +3,7 @@ import { Canvas } from '@react-three/fiber'
 // import { OrbitControls } from '@react-three/drei';
 import Globe from './Globe';
 
-export default function Scene({ country, showTorus }) {
+export default function Scene({ country, showTorus, borderLineWidth }) {
 
   return (
     <Canvas
@@ -14,7 +14,7 @@ export default function Scene({ country, showTorus }) {
 
       <color attach="background" args={["#F1F1E6"]} />
       <group rotation={[0, 0, -Math.PI / 2]}>
-        <Globe country={country} showTorus={showTorus} />
+        <Globe country={country} showTorus={showTorus} borderLineWidth={borderLineWidth} />
       </group>
 
     </Canvas>

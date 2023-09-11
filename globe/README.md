@@ -27,7 +27,11 @@ This module provides a 3D globe visualization with selectable country points and
 3. Use the component in your render method:
 
    ```jsx
-   <Globe country={country} showTorus={showTorus} />
+   <Globe
+     country={country}
+     showTorus={showTorus}
+     borderLineWidth={borderLineWidth}
+   />
    ```
 
 ## Notes for Development

@@ -21,7 +21,7 @@ void main() {
 }
 `;
 
-export default function Globe({ country = COUNTRIES.NORTH_POLE, showTorus = false, onCountryChange, onTorusToggle }) {
+export default function Globe({ country, showTorus, borderLineWidth }) {
   const globeRef = React.useRef();
   const torusRef = React.useRef();
 
@@ -86,7 +86,7 @@ export default function Globe({ country = COUNTRIES.NORTH_POLE, showTorus = fals
         />
       </mesh>
 
-      <GeoJSON />
+      <GeoJSON borderLineWidth={borderLineWidth} />
       
     </group>
   );

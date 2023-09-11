@@ -1,5 +1,6 @@
 import React from 'react';
 import * as THREE from 'three';
+import { Line } from '@react-three/drei';
 import geoJson from '../data/ne_110m_admin_0_countries.json';
 
 const vertexShader = `
@@ -57,24 +58,26 @@ function projectVertexToSphere(longitude, latitude) {
 
 
 
-function createBorderLines(coords, offset, lineShader) {
-  const vertices = [];
+function createBorderLines(coords, borderLineWidth, offset, lineFragmentShader) {
+  const points = [];
 
   for (let i = 0; i < coords[0].length; i++) {
       const point = coords[0][i];
       const projectedVertex = projectVertexToSphere(point[0], point[1]);
-      vertices.push(projectedVertex.x * offset, projectedVertex.y * offset, projectedVertex.z * offset);
+      points.push(new THREE.Vector3(projectedVertex.x * offset, projectedVertex.y * offset, projectedVertex.z * offset));
   }
 
-  const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-
-  return <line geometry={geometry} key={`border-${Math.random()}`}>
-      <shaderMaterial vertexShader={vertexShader} fragmentShader={lineShader} />
-  </line>;
+  return (
+    <Line
+      points={points}
+      fragmentShader={lineFragmentShader}
+      lineWidth={borderLineWidth}
+      key={`border-${Math.random()}`}
+    />
+  );
 }
 
-function processPolygon(coords, index, idx) {
+function processPolygon(coords, index, idx, borderLineWidth) {
   const shape = geoJsonToShape(coords[0]);
 
   const extrudeSettings = {
@@ -116,7 +119,7 @@ function processPolygon(coords, index, idx) {
   }
 
   const key = idx !== undefined ? `${index}-${idx}` : index;
-  const borderLinesRaised = createBorderLines(coords, 1.03, lineFragmentShader);
+  const borderLinesRaised = createBorderLines(coords, borderLineWidth, 1.03, lineFragmentShader);
 
   return (
     <group key={key}>
@@ -131,26 +134,26 @@ function processPolygon(coords, index, idx) {
   );
 }
 
-function convertGeoJsonToMeshes(feature, index) {
+function convertGeoJsonToMeshes(feature, index, borderLineWidth) {
   const { geometry: featureGeometry } = feature;
 
   if (featureGeometry.type === "Polygon") {
-      return processPolygon(featureGeometry.coordinates, index);
+      return processPolygon(featureGeometry.coordinates, index, null, borderLineWidth);
   } 
   else if (featureGeometry.type === "MultiPolygon") {
       // Flatten the multipolygon into individual polygon geometries
       return featureGeometry.coordinates.map((coords, idx) => 
-          processPolygon(coords, index, idx)
+          processPolygon(coords, index, idx, borderLineWidth)
       );
   }
 }
 
 
-export default function GeoJSON() {
+export default function GeoJSON({ borderLineWidth }) {
 
   return (
     <group>
-        {geoJson.features.map((feature, index) => convertGeoJsonToMeshes(feature, index))}
+        {geoJson.features.map((feature, index) => convertGeoJsonToMeshes(feature, index, borderLineWidth))}
     </group>
   );
 }
