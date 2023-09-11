@@ -3,7 +3,7 @@ import './style.css';
 import ReactDOM from 'react-dom/client';
 import Globe from './components/Scene.jsx';
 
-const BORDER_LINE_WIDTH = 1.5
+const BORDER_LINE_WIDTH = 2
 
 export const COUNTRIES = {
   NORTH_POLE: [90, 0],
