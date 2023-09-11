@@ -3,12 +3,15 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import Plane from './Plane';
 
-const SCROLL_SENSITIVITY = 0.0005; // how fast the planes will move
-const SPACING_FACTOR = 3; // how much the planes will scale
-const SCALE_FACTOR = 0.5; // how much the planes will scale
+const SCROLL_SENSITIVITY = 0.0003; // how fast the planes will move
 
-let ZOOM = window.innerWidth > 768 ? 400: 300; // camera zoom
+const SPACING_FACTOR = 3; // how much the plane spacing will scale with zoom
+const SPACING_X = 1; // spacing offset in the x direction
+const SPACING_Y = 0.2; // spacing offset in the y direction
 
+const SCALE_FACTOR = 0.5; // how much the scene will scale with zoom (180deg out of phase with zoom)
+
+let zoom = window.innerWidth > 768 ? 400: 300; // camera zoom, based on screen size
 
 export default function Scene() {
   const [virtualScroll, setVirtualScroll] = useState(0);
@@ -25,10 +28,6 @@ export default function Scene() {
       setCosScroll(cosScroll);
 
       let scale = 1 + SCALE_FACTOR * (1 - Math.abs(cosScroll));
-
-      console.log(scale);
-      // console.log(scale);
-
       setCosScale(scale);
     };
 
@@ -43,11 +42,11 @@ export default function Scene() {
     <Canvas
       gl={{ antialias: false, alpha: false }}
       orthographic
-      camera={{ near: 0.1, far: 10000000, position: [0, 0, 6], zoom: ZOOM }}
+      camera={{ near: 0.1, far: 10000000, position: [0, 0, 6], zoom: zoom }}
       ref={sceneRef}
     >
       <color attach="background" args={["#F1F1E6"]} />
-      <group rotation={[rotationAngle * 0.2, -rotationAngle * 1, 0]} scale={[cosScale, cosScale, cosScale]} >
+      <group rotation={[rotationAngle * SPACING_Y, -rotationAngle * SPACING_X, 0]} scale={[cosScale, cosScale, cosScale]} >
         <Plane location={[0, 0, -1 * spacing]} />
         <Plane location={[0, 0, 0]} />
         <Plane location={[0, 0, 1 * spacing]} />
