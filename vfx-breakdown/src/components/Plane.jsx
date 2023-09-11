@@ -1,37 +1,33 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import * as THREE from 'three';
-import { useFrame } from '@react-three/fiber';
+import { TextureLoader } from 'three';
+import { useLoader } from '@react-three/fiber';
 
-const vertexShader = `
-void main() {
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-}
-`;
+export default function Plane({ location = [0, 0, 0], imgSrc }) {
+  const texture = useLoader(TextureLoader, imgSrc);
+  texture.minFilter = THREE.LinearFilter;
 
-const fragmentShader = `
-void main() {
-    gl_FragColor = vec4(251.0/255.0, 251.0/255.0, 240.0/255.0, 1.0);
-}
-`;
+  // Adjusting UV coordinates based on the texture's aspect ratio
+  const adjustedUVs = useMemo(() => {
+    const planeAspect = 2;  // 2:1 aspect ratio of the plane
+    const imageAspect = texture.image.width / texture.image.height;
+    
+    const bufferGeometry = new THREE.PlaneBufferGeometry(2, 1);
+    const uvAttribute = bufferGeometry.attributes.uv;
 
-const fragmentShaderRed = `
-void main() {
-    gl_FragColor = vec4(255.0/255.0, 98.0/255.0, 90.0/255.0, 1.0);
-}
-`;
+    for (let i = 0; i < uvAttribute.count; i++) {
+      // Adjusting the uv's x coordinate based on the aspect ratio
+      uvAttribute.setX(i, uvAttribute.getX(i) / (planeAspect / imageAspect));
+    }
 
-export default function Plane({ location = [0, 0, 0] }) {
+    return bufferGeometry;
+  }, [texture]);
 
   return (
     <group position={location}>
       <mesh>
-        <planeBufferGeometry args={[2, 1]} />
-        <shaderMaterial
-          vertexShader={vertexShader}
-          fragmentShader={fragmentShaderRed}
-          transparent
-          side={THREE.DoubleSide}
-        /> 
+        <primitive attach="geometry" object={adjustedUVs} />
+        <meshBasicMaterial attach="material" map={texture} side={THREE.DoubleSide} />
       </mesh>
     </group>
   );
