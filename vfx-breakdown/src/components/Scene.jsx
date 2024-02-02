@@ -9,7 +9,7 @@ import imgFront from '../assets/return-to-seoul-3.jpg';
 const SCROLL_SENSITIVITY = 0.0003; // how fast the planes will move
 
 const SPACING_FACTOR = 1.5; // how much the plane spacing will scale with zoom
-const SPACING_X = 1.2; // spacing offset in the x direction
+const SPACING_X = 1.25; // spacing offset in the x direction
 const SPACING_Y = 0.25; // spacing offset in the y direction
 
 const SCALE_FACTOR = 0.5; // how much the scene will scale with zoom (180deg out of phase with zoom)
@@ -51,8 +51,7 @@ export default function Scene() {
   return (
     <Canvas
       gl={{ antialias: true, alpha: false }}
-      orthographic
-      camera={{ near: 0.1, far: 10000000, position: [0, 0, 10], zoom: zoom }}
+      camera={{ near: 0.1, far: 10000, position: [0, 0, 500], zoom: zoom }}
       ref={sceneRef}
     >
       <color attach="background" args={["#F1F1E6"]} />
