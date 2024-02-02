@@ -12,7 +12,7 @@ export default function Plane({ location = [0, 0, 0], imgSrc, cosScroll }) {
     const pan_effect = 0.05;
     const maxPanEffect = pan_effect; // The maximum extent of the pan effect
     const initialZoom = 1.0 - maxPanEffect; // Ensure initial zoom accounts for max pan effect
-    const parallaxFactor = -5; // Use Z position as a factor for parallax intensity
+    const parallaxFactor = location[2] - 4; // Use Z position as a factor for parallax intensity
     texture.offset.x = parallaxFactor * cosScroll * 0.5 * pan_effect + 0.1; // Adjust for desired effect
     // Adjust initial zoom to counter the pan effect and apply additional zoom based on cosScroll
     texture.repeat.set(initialZoom + Math.abs(parallaxFactor) * location[0] * (1 - cosScroll), initialZoom);
