@@ -9,10 +9,10 @@ export default function Plane({ location = [0, 0, 0], imgSrc, cosScroll }) {
 
   // Calculate the initial zoom based on the maximum expected pan effect
   useMemo(() => {
-    const pan_effect = 0.1;
+    const pan_effect = 0.05;
     const zoom_scale = 2.5;
     const parallaxFactor = location[2] - 3; // Use Z position as a factor for parallax intensity
-    texture.offset.x = parallaxFactor * cosScroll * 0.5 * pan_effect + 0.1; // Adjust for desired effect
+    texture.offset.x = parallaxFactor * cosScroll * 0.5 * pan_effect + 0.075; // Adjust for desired effect
     // Adjust initial zoom to counter the pan effect and apply additional zoom based on cosScroll
 
     const zoomIntensity = 0.1;
