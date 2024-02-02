@@ -22,7 +22,7 @@ const imageSources = [
 ];
 
 function getRandomPosition() {
-  return [Math.random() * 8 - 4, Math.random() * 4 - 2, Math.random()  * 50 - 25];
+  return [Math.random() * 16 - 8, Math.random() * 8 - 4, Math.random()  * -25];
 }
 
 export default function Scene() {
@@ -33,7 +33,7 @@ export default function Scene() {
       >
       {/* <ambientLight intensity={1.5} /> */}
       {/* add fog */}
-      <fog attach="fog" args={['#1b1b1b', 1, 40]} />
+      <fog attach="fog" args={['#1b1b1b', 1, 50]} />
       <DynamicPlanes />
     </Canvas>
   );
