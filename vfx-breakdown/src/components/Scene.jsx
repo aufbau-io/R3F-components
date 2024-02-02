@@ -8,9 +8,9 @@ import imgFront from '../assets/return-to-seoul-3.jpg';
 
 const SCROLL_SENSITIVITY = 0.0003; // how fast the planes will move
 
-const SPACING_FACTOR = 2.5; // how much the plane spacing will scale with zoom
+const SPACING_FACTOR = 1.5; // how much the plane spacing will scale with zoom
 const SPACING_X = 1.2; // spacing offset in the x direction
-const SPACING_Y = 0.2; // spacing offset in the y direction
+const SPACING_Y = 0.25; // spacing offset in the y direction
 
 const SCALE_FACTOR = 0.5; // how much the scene will scale with zoom (180deg out of phase with zoom)
 
@@ -46,7 +46,7 @@ export default function Scene() {
   }, [virtualScroll]);
 
   const spacing = cosScroll * SPACING_FACTOR; // from 0 to SPACING_FACTOR
-  const rotationAngle = Math.PI / 8 * cosScroll; // from 0 to 45 degrees
+  const rotationAngle = Math.PI / 6 * cosScroll; // from 0 to 45 degrees
 
   return (
     <Canvas
@@ -57,11 +57,10 @@ export default function Scene() {
     >
       <color attach="background" args={["#F1F1E6"]} />
       <group rotation={[rotationAngle * SPACING_Y, -rotationAngle * SPACING_X, 0]} scale={[cosScale, cosScale, cosScale]} >
-        <Plane imgSrc={imgBack} location={[0, 0, -1 * spacing]} />
-        <Plane imgSrc={imgMiddle} location={[0, 0, 0]} />
-        <Plane imgSrc={imgFront} location={[0, 0, 1 * spacing]} />
+        <Plane imgSrc={imgBack} location={[0, 0, -1 * spacing]} cosScroll={cosScroll} />
+        <Plane imgSrc={imgMiddle} location={[0, 0, 0]} cosScroll={cosScroll} />
+        <Plane imgSrc={imgFront} location={[0, 0, 1 * spacing]} cosScroll={cosScroll} />
       </group>
-      {/* <OrbitControls/> */}
     </Canvas>
   );
 }
