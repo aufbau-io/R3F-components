@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './style.css';
 import ReactDOM from 'react-dom/client';
-import VFXBreakdown from './components/Scene.jsx';
+import ParrallaxImageSearch from './components/Scene.jsx';
 
 function App() {
   return (
-    <VFXBreakdown />
+    <ParrallaxImageSearch />
   );
 }
 

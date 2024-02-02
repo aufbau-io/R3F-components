@@ -1,66 +1,99 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
-
+import { Canvas, useFrame } from '@react-three/fiber';
 import Plane from './Plane';
-import imgBack from '../assets/return-to-seoul-1.jpg';
-import imgMiddle from '../assets/return-to-seoul-2.jpg';
-import imgFront from '../assets/return-to-seoul-3.jpg';
+import * as THREE from 'three';
 
-const SCROLL_SENSITIVITY = 0.0003; // how fast the planes will move
+const imageSources = [
+  '../assets/1.jpg',
+  '../assets/2.jpg',
+  '../assets/3.jpg',
+  '../assets/4.jpg',
+  '../assets/5.jpg',
+  '../assets/6.jpg',
+  '../assets/7.jpg',
+  '../assets/8.jpg',
+  '../assets/9.jpg',
+  '../assets/10.jpg',
+  '../assets/11.jpg',
+  '../assets/12.jpg',
+  '../assets/13.jpg',
+  '../assets/14.jpg',
+  '../assets/15.jpg',
+];
 
-const SPACING_FACTOR = 1.5; // how much the plane spacing will scale with zoom
-const SPACING_X = 1.2; // spacing offset in the x direction
-const SPACING_Y = 0.25; // spacing offset in the y direction
-
-const SCALE_FACTOR = 0.5; // how much the scene will scale with zoom (180deg out of phase with zoom)
-
-// BYRON, YOU'LL NEED TO TWEAK THIS ZOOM VAR FOR THE DIFFERENT SCREEN SIZES
-let zoom = window.innerWidth > 768 ? 400: 300; // camera zoom, based on screen size
-
-function cubicEaseOut(t) {
-  const f = t - 1.0;
-  return f * f * f + 1.0;
+function getRandomPosition() {
+  return [Math.random() * 8 - 4, Math.random() * 4 - 2, Math.random()  * 50 - 25];
 }
 
 export default function Scene() {
-  const [virtualScroll, setVirtualScroll] = useState(0);
-  const [cosScroll, setCosScroll] = useState(0);
-  const [cosScale, setCosScale] = useState(1 + SCALE_FACTOR);
-  const sceneRef = useRef();
-
-  useEffect(() => {
-    const handleWheel = (event) => {
-      let newScroll = virtualScroll + event.deltaY * SCROLL_SENSITIVITY;
-      let cosScrollRaw = 1 - Math.abs(Math.cos(newScroll));
-      let cosScroll = cubicEaseOut(cosScrollRaw);
-      
-      setVirtualScroll(newScroll);
-      setCosScroll(cosScroll);
-
-      let scale = 1 + SCALE_FACTOR * (1 - Math.abs(cosScroll));
-      setCosScale(scale);
-    };
-
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    return () => window.removeEventListener('wheel', handleWheel);
-  }, [virtualScroll]);
-
-  const spacing = cosScroll * SPACING_FACTOR; // from 0 to SPACING_FACTOR
-  const rotationAngle = Math.PI / 6 * cosScroll; // from 0 to 45 degrees
-
   return (
-    <Canvas
-      gl={{ antialias: true, alpha: false }}
-      orthographic
-      camera={{ near: 0.1, far: 10000000, position: [0, 0, 10], zoom: zoom }}
-      ref={sceneRef}
-    >
-      <color attach="background" args={["#F1F1E6"]} />
-      <group rotation={[rotationAngle * SPACING_Y, -rotationAngle * SPACING_X, 0]} scale={[cosScale, cosScale, cosScale]} >
-        <Plane imgSrc={imgBack} location={[0, 0, -1 * spacing]} cosScroll={cosScroll} />
-        <Plane imgSrc={imgMiddle} location={[0, 0, 0]} cosScroll={cosScroll} />
-        <Plane imgSrc={imgFront} location={[0, 0, 1 * spacing]} cosScroll={cosScroll} />
-      </group>
+      <Canvas
+        gl={{ antialias: true, alpha: false }}
+        camera={{ near: 0.1, far: 100, position: [0, 0, 0]}}
+      >
+      {/* <ambientLight intensity={1.5} /> */}
+      {/* add fog */}
+      <fog attach="fog" args={['#1b1b1b', 1, 40]} />
+      <DynamicPlanes />
     </Canvas>
   );
 }
+
+const DynamicPlanes = () => {
+  const [planes, setPlanes] = useState(imageSources.map(src => ({
+    imgSrc: src,
+    location: getRandomPosition(),
+  })));
+  const mouse = useRef([0, 0]);
+  const scrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Update scroll position
+      const currentScrollY = window.scrollY;
+      // Check if we've scrolled up or down
+      if (currentScrollY > scrollY.current) {
+        // Scrolling down
+        addPlane();
+      } else {
+        // Scrolling up - optional, depending on desired behavior
+        // addPlane(true); // Uncomment to enable adding planes when scrolling up
+      }
+      scrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const addPlane = (isScrollingUp = false) => {
+    setPlanes(prevPlanes => {
+      const newPlaneIndex = prevPlanes.length % imageSources.length;
+      const newPlane = {
+        imgSrc: imageSources[newPlaneIndex],
+        location: getRandomPosition(),
+      };
+      if (isScrollingUp) {
+        return [newPlane, ...prevPlanes]; // Add to the beginning for scrolling up
+      } else {
+        return [...prevPlanes, newPlane]; // Add to the end for scrolling down
+      }
+    });
+  };
+
+  useFrame(({ camera }) => {
+    camera.position.lerp(new THREE.Vector3(mouse.current[0] * 2, mouse.current[1] * 2, camera.position.z), 0.1);
+  });
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      mouse.current = [(event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1];
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  return planes.map((plane, index) => (
+    <Plane key={index} imgSrc={plane.imgSrc} location={plane.location} />
+  ));
+};
