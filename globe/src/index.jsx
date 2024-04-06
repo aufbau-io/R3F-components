@@ -21,7 +21,7 @@ export const COUNTRIES = {
 };
 
 function App() {
-  const [country, setCountry] = useState(COUNTRIES.LONDON); // initial country
+  const [country, setCountry] = useState(COUNTRIES.LOS_ANGELES); // initial country
   const [showTorus, setShowTorus] = useState(true); // showing the torus initially
 
   return (
