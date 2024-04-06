@@ -6,22 +6,16 @@ import Globe from './components/Scene.jsx';
 const BORDER_LINE_WIDTH = 1.5
 
 export const COUNTRIES = {
-  // NORTH_POLE: [90, 0],
-  // SOUTH_POLE: [-90, 0],
   LONDON: [51.5074, -0.1278],
-  VANCOUVER: [49.2827, -123.1207],
-  // MONTREAL: [45.5017, -73.5673],
-  // MOHALI: [30.7046, 76.7179],
+  TOKYO: [35.6895, 139.6917],
   MUMBAI: [19.0760, 72.8777],
-  // BANGALORE: [12.9716, 77.5946],
-  LOS_ANGELES: [34.0522, -118.2437],
-  TORONTO: [43.6532, -79.3832],
-  // CHENNAI: [13.0827, 80.2707],
-  SYDNEY: [-33.8688, 151.2093]
+  NEW_YORK: [40.7128, -74.0060],
+  SYDNEY: [-33.8688, 151.2093],
+  RIO_DE_JANEIRO: [-22.9068, -43.1729],
 };
 
 function App() {
-  const [country, setCountry] = useState(COUNTRIES.LOS_ANGELES); // initial country
+  const [country, setCountry] = useState(COUNTRIES.NEW_YORK); // initial country
   const [showTorus, setShowTorus] = useState(true); // showing the torus initially
 
   // Function to compare if two countries are the same based on their coordinates
