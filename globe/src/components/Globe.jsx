@@ -50,7 +50,7 @@ export default function Globe({ country, showTorus, borderLineWidth }) {
     <group ref={globeRef}>
         {showTorus && 
         <mesh ref={torusRef} position={targetLocation}>
-            <torusGeometry args={[0.03, 0.01, 16, 100]} />
+            <torusGeometry args={[0.04, 0.02, 16, 100]} />
             <meshStandardMaterial color="#746ca8" />
             {/* <shaderMaterial 
               vertexShader={vertexShader} 
