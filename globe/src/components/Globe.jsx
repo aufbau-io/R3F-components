@@ -11,13 +11,13 @@ void main() {
 
 const fragmentShader = `
 void main() {
-    gl_FragColor = vec4(251.0/255.0, 251.0/255.0, 240.0/255.0, 1.0);
+    gl_FragColor = vec4(244.0/255.0, 243.0/255.0, 255.0/255.0, 1.0);
 }
 `;
 
 const fragmentShaderRed = `
 void main() {
-    gl_FragColor = vec4(255.0/255.0, 98.0/255.0, 90.0/255.0, 1.0);
+    gl_FragColor = vec4(30.0/255.0, 30.0/255.0, 30.0/255.0, 1.0);
 }
 `;
 
@@ -68,10 +68,9 @@ export default function Globe({ country, showTorus, borderLineWidth }) {
 
   return (
     <group ref={globeRef}>
-
         {showTorus && targetLocation && 
         <mesh ref={torusRef} position={targetLocation}>
-            <torusGeometry args={[0.03, 0.002, 8, 32]} />
+            <torusGeometry args={[0.03, 0.003, 8, 32]} />
             <shaderMaterial 
               vertexShader={vertexShader} 
               fragmentShader={fragmentShaderRed}
@@ -80,10 +79,11 @@ export default function Globe({ country, showTorus, borderLineWidth }) {
       
       <mesh>
         <sphereGeometry args={[1, 32]} />
-        <shaderMaterial 
+        <meshStandardMaterial color="#e9e8fb" />
+        {/* <shaderMaterial 
           vertexShader={vertexShader} 
           fragmentShader={fragmentShader}
-        />
+        /> */}
       </mesh>
 
       <GeoJSON borderLineWidth={borderLineWidth} />

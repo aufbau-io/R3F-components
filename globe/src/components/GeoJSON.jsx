@@ -11,13 +11,13 @@ void main() {
 
 const fragmentShader = `
 void main() {
-    gl_FragColor = vec4(229.0/255.0, 226.0/255.0, 218.0/255.0, 1.0);
+    gl_FragColor = vec4(234.0/255.0, 233.0/255.0, 245.0/255.0, 1.0);
 }
 `;
 
 const lineFragmentShader = `
     void main() {
-      gl_FragColor = vec4(251.0/255.0, 251.0/255.0, 240.0/255.0, 1.0);
+      gl_FragColor = vec4(214.0/255.0, 213.0/255.0, 225.0/255.0, 1.0);
     }
 `;
 
@@ -70,6 +70,7 @@ function createBorderLines(coords, borderLineWidth, offset, lineFragmentShader) 
   return (
     <Line
       points={points}
+      // color={0xd9d8eb}
       fragmentShader={lineFragmentShader}
       lineWidth={borderLineWidth}
       key={`border-${Math.random()}`}
@@ -124,10 +125,11 @@ function processPolygon(coords, index, idx, borderLineWidth) {
   return (
     <group key={key}>
       <mesh geometry={geometry}>
-        <shaderMaterial 
+      <meshStandardMaterial color="#e9e8fb" />
+        {/* <shaderMaterial 
             vertexShader={vertexShader} 
             fragmentShader={fragmentShader}
-        />
+        /> */}
       </mesh>
       {borderLinesRaised}
     </group>
