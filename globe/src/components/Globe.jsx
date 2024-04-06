@@ -3,38 +3,16 @@ import GeoJSON from './GeoJSON';
 import * as THREE from 'three';
 import { useFrame  } from '@react-three/fiber';
 
-const vertexShader = `
-void main() {
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-}
-`;
-
-const fragmentShader = `
-void main() {
-    gl_FragColor = vec4(244.0/255.0, 243.0/255.0, 255.0/255.0, 1.0);
-}
-`;
-
-const fragmentShaderRed = `
-void main() {
-    gl_FragColor = vec4(30.0/255.0, 30.0/255.0, 30.0/255.0, 1.0);
-}
-`;
 
 export default function Globe({ country, showTorus, borderLineWidth }) {
   const globeRef = React.useRef();
   const torusRef = React.useRef();
 
-  const [targetRotation, setTargetRotation] = React.useState(() => rotateToLocation(country).rotation);
-  const [targetLocation, setTargetLocation] = React.useState(() => rotateToLocation(country));
+  // const [targetRotation, setTargetRotation] = React.useState(() => rotateToLocation(country).rotation);
+  // const [targetLocation, setTargetLocation] = React.useState(() => rotateToLocation(country));
 
-  const memoizedValues = useMemo(() => rotateToLocation(country), [country]);
+  const { location: targetLocation, rotation: targetRotation } = useMemo(() => rotateToLocation(country), [country]);
 
-  useEffect(() => {
-    // Update state when country changes, triggering a re-render
-    setTargetLocation(memoizedValues.location);
-    setTargetRotation(memoizedValues.rotation);
-  }, [memoizedValues]);
 
   useFrame(() => {
     const globe = globeRef.current;
@@ -67,15 +45,10 @@ export default function Globe({ country, showTorus, borderLineWidth }) {
     };
   }
 
-  React.useEffect(() => {
-    const newValues = rotateToLocation(country);
-    setTargetLocation(newValues.location);
-    setTargetRotation(newValues.rotation);
-  }, [country]);
 
   return (
     <group ref={globeRef}>
-        {showTorus && targetLocation && 
+        {showTorus && 
         <mesh ref={torusRef} position={targetLocation}>
             <torusGeometry args={[0.03, 0.01, 16, 100]} />
             <meshStandardMaterial color="#746ca8" />

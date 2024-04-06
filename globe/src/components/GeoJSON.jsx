@@ -3,18 +3,6 @@ import * as THREE from 'three';
 import { Line } from '@react-three/drei';
 import geoJson from '../data/ne_110m_admin_0_countries.json';
 
-const vertexShader = `
-void main() {
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-}
-`;
-
-const fragmentShader = `
-void main() {
-    gl_FragColor = vec4(234.0/255.0, 233.0/255.0, 245.0/255.0, 1.0);
-}
-`;
-
 const lineFragmentShader = `
     void main() {
       gl_FragColor = vec4(214.0/255.0, 213.0/255.0, 225.0/255.0, 1.0);
