@@ -5,7 +5,7 @@ import geoJson from '../data/ne_110m_admin_0_countries.json';
 
 const lineFragmentShader = `
     void main() {
-      gl_FragColor = vec4(214.0/255.0, 213.0/255.0, 225.0/255.0, 1.0);
+      gl_FragColor = vec4(116.0/255.0, 108.0/255.0, 168.0/255.0, 1.0);
     }
 `;
 

@@ -13,9 +13,9 @@ export default function Scene({ country, showTorus, borderLineWidth }) {
       camera={{ near: 0.1, far: 10, position: [0, 0, 2], zoom: window.innerWidth > 768 ? 400 : 300 }}
     >
       <group rotation={[0, 0, -Math.PI / 2]}>
-      <ambientLight intensity={0.75} color="#e9e8fb" />
-      <ambientLight intensity={0.75} color="#746ca8" />
-        <spotLight position={[0, 0, 100]} color="#e9e8fb" />
+      <ambientLight intensity={0.5} color="#e9e8fb" />
+      <ambientLight intensity={0.5} color="#746ca8" />
+        <spotLight position={[0, 0, 10]} color="#e9e8fb" />
         <Globe country={country} showTorus={showTorus} borderLineWidth={borderLineWidth} />
       </group>
 
