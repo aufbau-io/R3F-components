@@ -70,11 +70,13 @@ export default function Globe({ country, showTorus, borderLineWidth }) {
     <group ref={globeRef}>
         {showTorus && targetLocation && 
         <mesh ref={torusRef} position={targetLocation}>
-            <torusGeometry args={[0.03, 0.003, 8, 32]} />
-            <shaderMaterial 
+            <torusGeometry args={[0.03, 0.01, 16, 100]} />
+            {/* make physical material translucent like plastic*/}
+            <meshPhysicalMaterial color={0x746ca8} roughness={0.8} transmission={0.25} thickness={0.5} />
+            {/* <shaderMaterial 
               vertexShader={vertexShader} 
               fragmentShader={fragmentShaderRed}
-            />
+            /> */}
         </mesh>}
       
       <mesh>
