@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import GeoJSON from './GeoJSON';
 import * as THREE from 'three';
-import { useFrame } from '@react-three/fiber';
+import { useFrame  } from '@react-three/fiber';
 
 const vertexShader = `
 void main() {
@@ -28,6 +28,13 @@ export default function Globe({ country, showTorus, borderLineWidth }) {
   const [targetRotation, setTargetRotation] = React.useState(() => rotateToLocation(country).rotation);
   const [targetLocation, setTargetLocation] = React.useState(() => rotateToLocation(country));
 
+  const memoizedValues = useMemo(() => rotateToLocation(country), [country]);
+
+  useEffect(() => {
+    // Update state when country changes, triggering a re-render
+    setTargetLocation(memoizedValues.location);
+    setTargetRotation(memoizedValues.rotation);
+  }, [memoizedValues]);
 
   useFrame(() => {
     const globe = globeRef.current;
@@ -71,8 +78,7 @@ export default function Globe({ country, showTorus, borderLineWidth }) {
         {showTorus && targetLocation && 
         <mesh ref={torusRef} position={targetLocation}>
             <torusGeometry args={[0.03, 0.01, 16, 100]} />
-            {/* make physical material translucent like plastic*/}
-            <meshPhysicalMaterial color={0x746ca8} roughness={0.8} transmission={0.25} thickness={0.5} />
+            <meshStandardMaterial color="#746ca8" />
             {/* <shaderMaterial 
               vertexShader={vertexShader} 
               fragmentShader={fragmentShaderRed}

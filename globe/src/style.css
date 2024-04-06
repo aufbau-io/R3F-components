@@ -8,9 +8,10 @@ body,
   height: 100%;
   background: radial-gradient(
       circle at center,
-      rgba(116, 108, 168, 0.4) 0%,
-      rgba(116, 108, 168, 0.4) 10vw,
-      rgba(214, 211, 243, 0.1) 35vw
+      rgba(116, 108, 168, 0.3) 0%,
+      rgba(116, 108, 168, 0.3) 10vw,
+      rgba(214, 211, 243, 0.1) 30vw,
+      rgba(214, 211, 243, 0) 40vw
     ),
     #e9e8fb;
 }
