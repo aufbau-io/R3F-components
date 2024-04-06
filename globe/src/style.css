@@ -46,7 +46,8 @@ button {
   font-family: "Roboto", sans-serif;
 }
 
-button:hover {
+button:hover,
+button.selected-country {
   background: #e9e8fb;
   color: #746ca8;
 }
