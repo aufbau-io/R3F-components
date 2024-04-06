@@ -11,7 +11,7 @@ export const COUNTRIES = {
   MUMBAI: [19.0760, 72.8777],
   NEW_YORK: [40.7128, -74.0060],
   SYDNEY: [-33.8688, 151.2093],
-  RIO_DE_JANEIRO: [-22.9068, -43.1729],
+  HAWAII: [19.8968, -155.5828],
 };
 
 function App() {
