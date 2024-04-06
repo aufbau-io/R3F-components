@@ -10,7 +10,7 @@ export default function Scene({ country, showTorus, borderLineWidth }) {
       gl={{ antialias: false, alpha: true }}
       opacity={0}
       orthographic
-      camera={{ near: 0.1, far: 10, position: [0, 0, 2], zoom: window.innerWidth > 768 ? 400 : 300 }}
+      camera={{ near: 0.1, far: 10, position: [0, 0, 2], zoom: window.innerWidth > 768 ? 400 : 200 }}
     >
       <group rotation={[0, 0, -Math.PI / 2]}>
       <ambientLight intensity={0.5} color="#e9e8fb" />
