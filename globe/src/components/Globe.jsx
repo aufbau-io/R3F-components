@@ -18,9 +18,9 @@ export default function Globe({ country, showTorus, borderLineWidth }) {
     const globe = globeRef.current;
     const torus = torusRef.current;
     if (globe) {
-      globe.rotation.x = THREE.MathUtils.lerp(globe.rotation.x,  targetRotation[0], 0.05);
-      globe.rotation.y = THREE.MathUtils.lerp(globe.rotation.y,  targetRotation[1], 0.05);
-      globe.rotation.z = THREE.MathUtils.lerp(globe.rotation.z,  targetRotation[2], 0.05);
+      globe.rotation.x = THREE.MathUtils.lerp(globe.rotation.x,  targetRotation[0], 0.025);
+      globe.rotation.y = THREE.MathUtils.lerp(globe.rotation.y,  targetRotation[1], 0.025);
+      globe.rotation.z = THREE.MathUtils.lerp(globe.rotation.z,  targetRotation[2], 0.025);
     }
     if (torus && targetLocation) {
       torus.lookAt(new THREE.Vector3(0,0, 0));
